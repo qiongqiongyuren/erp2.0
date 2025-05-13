@@ -1,0 +1,7 @@
+git init
+git add .
+git commit -m "初始化项目"
+git branch -M main
+git remote add origin 地址
+git remote set-url origin 地址
+git push -u origin main

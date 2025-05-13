@@ -1,0 +1,15 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 你可以在这里定义你的数据模型，例如：
+// model User {
+//   id    Int     @id @default(autoincrement())
+//   name  String
+//   email String  @unique
+// }
