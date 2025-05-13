@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "./generated/client"
 }
 
 datasource db {
@@ -7,9 +8,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// 你可以在这里定义你的数据模型，例如：
-// model User {
-//   id    Int     @id @default(autoincrement())
-//   name  String
-//   email String  @unique
-// }
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  stock       Int     @default(0)
+  category    String
+  imageUrl    String?
+}
+
+model Order {
+  id           String   @id @default(cuid())
+  customerName String
+  productName  String
+  quantity     Int
+  totalAmount  Float
+  status       String   @default("pending")
+  createdAt    DateTime @default(now())
+}
+
+model RawMaterial {
+  id          String  @id @default(cuid())
+  name        String
+  price       Float
+  stock       Int     @default(0)
+  unit        String
+  description String?
+}
