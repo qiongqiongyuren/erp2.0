@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { prisma } from '../../lib/prisma';
 
 // GET: 获取所有商品
 export async function GET() {
