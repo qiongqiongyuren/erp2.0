@@ -5,14 +5,22 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { username, password } = body;
 
-    // 简单的验证逻辑
-    if (username === 'admin' && password === 'admin') {
-      return NextResponse.json({ 
+    // 支持4种管理员账号
+    const users = [
+      { username: 'root', password: 'root123', role: 'root' },
+      { username: 'admin', password: 'admin123', role: 'admin' },
+      { username: 'manager', password: 'manager123', role: 'manager' },
+      { username: 'user', password: 'user123', role: 'user' },
+    ];
+    const found = users.find(u => u.username === username && u.password === password);
+    if (found) {
+      return NextResponse.json({
         success: true,
         user: {
-          username: 'admin',
-          role: 'admin'
-        }
+          username: found.username,
+          role: found.role
+        },
+        role: found.role
       });
     }
 

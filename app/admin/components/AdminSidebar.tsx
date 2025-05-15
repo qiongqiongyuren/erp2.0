@@ -14,6 +14,8 @@ import { useRouter, usePathname } from 'next/navigation';
 
 const { Sider } = Layout;
 
+const SIDEBAR_WIDTH = 220;
+
 export default function AdminSidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const router = useRouter();
@@ -64,21 +66,44 @@ export default function AdminSidebar() {
   }, []);
 
   return (
-    <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed} width={200} style={{ background: '#fff' }}>
-      <div style={{ height: 32, margin: 16, fontWeight: 'bold', fontSize: 20, color: '#1890ff', textAlign: 'center' }}>ERP后台</div>
+    <Sider
+      collapsible
+      collapsed={collapsed}
+      onCollapse={setCollapsed}
+      width={SIDEBAR_WIDTH}
+      style={{
+        minHeight: '100vh',
+        background: '#fff',
+        borderRight: '1px solid #f0f0f0',
+        position: 'sticky',
+        top: 0,
+        left: 0,
+        zIndex: 100,
+        flex: `0 0 ${SIDEBAR_WIDTH}px`,
+        maxWidth: SIDEBAR_WIDTH,
+        minWidth: SIDEBAR_WIDTH,
+        boxShadow: '2px 0 8px #f0f1f233',
+      }}
+    >
+      <div style={{ height: 48, margin: 16, fontWeight: 700, fontSize: 20, color: '#1677ff', textAlign: 'center', letterSpacing: 2 }}>
+        ERP后台
+      </div>
       <Menu
         mode="inline"
         selectedKeys={[pathname]}
-        style={{ height: '100%', borderRight: 0 }}
         items={menuItems}
         onClick={({ key }) => {
           if (key === '/admin/login') {
-            localStorage.removeItem('erp_user');
-            router.push('/admin/login');
+            if (typeof window !== 'undefined') {
+              localStorage.removeItem('erp_admin_login');
+              localStorage.removeItem('erp_admin_role');
+            }
+            router.replace('/admin/login');
           } else {
             router.push(key);
           }
         }}
+        style={{ height: '100%', borderRight: 0, fontSize: 16 }}
       />
     </Sider>
   );
