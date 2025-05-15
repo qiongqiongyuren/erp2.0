@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { Table, Button, Modal, Form, Input, InputNumber, Space, message, Upload, Tag } from "antd";
 import { EditOutlined, DeleteOutlined, PlusOutlined, UploadOutlined } from "@ant-design/icons";
@@ -14,12 +13,6 @@ interface Product {
   description: string;
   imageUrl?: string;
 }
-
-"use client";
-import { useState, useEffect } from "react";
-import { Table, Button, Modal, Form, Input, InputNumber, Space, message, Upload, Tag } from "antd";
-import { EditOutlined, DeleteOutlined, PlusOutlined, UploadOutlined } from "@ant-design/icons";
-import type { UploadProps } from "antd";
 
 export default function ProductsPage() {
   // 动态动画效果
@@ -150,29 +143,32 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between mb-4">
-        <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
-          新增产品
-        </Button>
+    <div style={{position:'relative', minHeight:'100vh'}}>
+      {animation}
+      <div className="p-6">
+        <div className="flex justify-between mb-4">
+          <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
+            新增产品
+          </Button>
+        </div>
+        <Table columns={columns} dataSource={products} rowKey="id" />
+        <Modal
+          title={editingId ? '编辑产品' : '新增产品'}
+          open={isModalOpen}
+          onOk={handleOk}
+          onCancel={() => setIsModalOpen(false)}
+          destroyOnClose
+        >
+          <Form form={form} layout="vertical">
+            <Form.Item name="name" label="产品名称" rules={[{ required: true, message: '请输入产品名称' }]}> <Input /> </Form.Item>
+            <Form.Item name="price" label="价格" rules={[{ required: true, message: '请输入价格' }]}> <InputNumber min={0} style={{ width: '100%' }} /> </Form.Item>
+            <Form.Item name="stock" label="库存" rules={[{ required: true, message: '请输入库存' }]}> <InputNumber min={0} style={{ width: '100%' }} /> </Form.Item>
+            <Form.Item name="category" label="分类"> <Input /> </Form.Item>
+            <Form.Item name="description" label="描述"> <Input.TextArea rows={2} /> </Form.Item>
+            <Form.Item name="imageUrl" label="图片"> <Upload {...uploadProps}><Button icon={<UploadOutlined />}>上传图片</Button></Upload> </Form.Item>
+          </Form>
+        </Modal>
       </div>
-      <Table columns={columns} dataSource={products} rowKey="id" />
-      <Modal
-        title={editingId ? '编辑产品' : '新增产品'}
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={() => setIsModalOpen(false)}
-        destroyOnClose
-      >
-        <Form form={form} layout="vertical">
-          <Form.Item name="name" label="产品名称" rules={[{ required: true, message: '请输入产品名称' }]}> <Input /> </Form.Item>
-          <Form.Item name="price" label="价格" rules={[{ required: true, message: '请输入价格' }]}> <InputNumber min={0} style={{ width: '100%' }} /> </Form.Item>
-          <Form.Item name="stock" label="库存" rules={[{ required: true, message: '请输入库存' }]}> <InputNumber min={0} style={{ width: '100%' }} /> </Form.Item>
-          <Form.Item name="category" label="分类"> <Input /> </Form.Item>
-          <Form.Item name="description" label="描述"> <Input.TextArea rows={2} /> </Form.Item>
-          <Form.Item name="imageUrl" label="图片"> <Upload {...uploadProps}><Button icon={<UploadOutlined />}>上传图片</Button></Upload> </Form.Item>
-        </Form>
-      </Modal>
     </div>
   );
 }

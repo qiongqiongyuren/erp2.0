@@ -1,10 +1,4 @@
 "use client";
-import { Card, Row, Col, Statistic } from "antd";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { AppstoreOutlined, TeamOutlined, ShoppingCartOutlined, InboxOutlined } from "@ant-design/icons";
-
-"use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Card, Row, Col, Statistic } from "antd";
@@ -111,19 +105,6 @@ export default function AdminDashboard() {
             </Col>
           </Row>
         </div>
-            </Card>
-          </Col>
-          <Col xs={24} sm={12} md={6}>
-            <Card>
-              <Statistic title="订单数" value={stats.orders} prefix={<ShoppingCartOutlined />} />
-            </Card>
-          </Col>
-          <Col xs={24} sm={12} md={6}>
-            <Card>
-              <Statistic title="原材料数" value={stats.materials} prefix={<InboxOutlined />} />
-            </Card>
-          </Col>
-        </Row>
       )}
     </div>
   );
