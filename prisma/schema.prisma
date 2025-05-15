@@ -12,6 +12,7 @@ model User {
   username  String   @unique
   email     String   @unique
   password  String
+  /// 角色类型: root(超级管理员)、admin(高级管理员)、manager(普通管理员)、user(普通用户)
   role      String   @default("user")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

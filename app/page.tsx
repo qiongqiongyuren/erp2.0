@@ -40,55 +40,21 @@ export default function Home() {
               icon={<ShopOutlined />}
               block
               size="large"
-              style={{ fontWeight: 500, fontSize: 18, transition: "all .2s", boxShadow: "0 2px 8px #1677ff22" }}
+              style={{ fontWeight: 600, fontSize: 22, letterSpacing: 2, height: 60, borderRadius: 12, background: "linear-gradient(90deg,#1677ff 60%,#66e0ff 100%)", boxShadow: "0 4px 16px #1677ff33" }}
               className="nav-btn"
             >
               前台商城
             </Button>
           </Link>
-          <Link href="/products" passHref legacyBehavior>
-            <Button
-              icon={<AppstoreOutlined />}
-              block
-              size="large"
-              style={{ fontWeight: 500, fontSize: 18, transition: "all .2s" }}
-              className="nav-btn"
-            >
-              产品管理
-            </Button>
-          </Link>
-          <Link href="/customers" passHref legacyBehavior>
-            <Button
-              icon={<TeamOutlined />}
-              block
-              size="large"
-              style={{ fontWeight: 500, fontSize: 18, transition: "all .2s" }}
-              className="nav-btn"
-            >
-              客户管理
-            </Button>
-          </Link>
-          <Link href="/orders" passHref legacyBehavior>
-            <Button
-              icon={<ShoppingCartOutlined />}
-              block
-              size="large"
-              style={{ fontWeight: 500, fontSize: 18, transition: "all .2s" }}
-              className="nav-btn"
-            >
-              订单管理
-            </Button>
-          </Link>
           <Link href="/admin/login" passHref legacyBehavior>
             <Button
-              type="dashed"
               icon={<LoginOutlined />}
               block
               size="large"
-              style={{ fontWeight: 500, fontSize: 18, transition: "all .2s" }}
+              style={{ fontWeight: 600, fontSize: 22, letterSpacing: 2, height: 60, borderRadius: 12, background: "linear-gradient(90deg,#ffb300 60%,#ffe066 100%)", boxShadow: "0 4px 16px #ffb30033" }}
               className="nav-btn"
             >
-              进入后台管理
+              后台管理
             </Button>
           </Link>
         </Space>

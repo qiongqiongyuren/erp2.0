@@ -15,7 +15,33 @@ interface Product {
   imageUrl?: string;
 }
 
+"use client";
+import { useState, useEffect } from "react";
+import { Table, Button, Modal, Form, Input, InputNumber, Space, message, Upload, Tag } from "antd";
+import { EditOutlined, DeleteOutlined, PlusOutlined, UploadOutlined } from "@ant-design/icons";
+import type { UploadProps } from "antd";
+
 export default function ProductsPage() {
+  // 动态动画效果
+  let animation: React.ReactNode = null;
+  if (typeof window !== 'undefined') {
+    const role = localStorage.getItem('erp_admin_role');
+    if (role === 'root') {
+      animation = (
+        <div style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',zIndex:0,pointerEvents:'none'}}>
+          <div className="super-root-glow" />
+        </div>
+      );
+    } else if (role === 'admin') {
+      animation = (
+        <div style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',zIndex:0,pointerEvents:'none',background:'linear-gradient(135deg,#e0e7ff55 0%,#f0fdfa55 100%)'}} />
+      );
+    } else if (role === 'manager') {
+      animation = (
+        <div style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',zIndex:0,pointerEvents:'none',background:'rgba(22,119,255,0.05)'}} />
+      );
+    }
+  }
   const [products, setProducts] = useState<Product[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();

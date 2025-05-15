@@ -4,6 +4,12 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AppstoreOutlined, TeamOutlined, ShoppingCartOutlined, InboxOutlined } from "@ant-design/icons";
 
+"use client";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { Card, Row, Col, Statistic } from "antd";
+import { AppstoreOutlined, TeamOutlined, ShoppingCartOutlined, InboxOutlined } from "@ant-design/icons";
+
 export default function AdminDashboard() {
   const router = useRouter();
   useEffect(() => {
@@ -58,15 +64,53 @@ export default function AdminDashboard() {
       {loading ? (
         <div style={{ textAlign: 'center', margin: 60 }}><span className="ant-spin ant-spin-lg" /></div>
       ) : (
-        <Row gutter={24}>
-          <Col xs={24} sm={12} md={6}>
-            <Card>
-              <Statistic title="产品数" value={stats.products} prefix={<AppstoreOutlined />} />
-            </Card>
-          </Col>
-          <Col xs={24} sm={12} md={6}>
-            <Card>
-              <Statistic title="客户数" value={stats.customers} prefix={<TeamOutlined />} />
+        <div>
+          {(() => {
+            let animation: React.ReactNode = null;
+            if (typeof window !== 'undefined') {
+              const role = localStorage.getItem('erp_admin_role');
+              if (role === 'root') {
+                animation = (
+                  <div style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',zIndex:0,pointerEvents:'none'}}>
+                    <div className="super-root-glow" />
+                    {/* 可用canvas粒子或svg动画增强 */}
+                  </div>
+                );
+              } else if (role === 'admin') {
+                animation = (
+                  <div style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',zIndex:0,pointerEvents:'none',background:'linear-gradient(135deg,#e0e7ff55 0%,#f0fdfa55 100%)'}} />
+                );
+              } else if (role === 'manager') {
+                animation = (
+                  <div style={{position:'absolute',top:0,left:0,width:'100%',height:'100%',zIndex:0,pointerEvents:'none',background:'rgba(22,119,255,0.05)'}} />
+                );
+              }
+            }
+            return animation;
+          })()}
+          <Row gutter={24}>
+            <Col xs={24} sm={12} md={6}>
+              <Card>
+                <Statistic title="产品数" value={stats.products} prefix={<AppstoreOutlined />} />
+              </Card>
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Card>
+                <Statistic title="客户数" value={stats.customers} prefix={<TeamOutlined />} />
+              </Card>
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Card>
+                <Statistic title="订单数" value={stats.orders} prefix={<ShoppingCartOutlined />} />
+              </Card>
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <Card>
+                <Statistic title="原材料数" value={stats.materials} prefix={<InboxOutlined />} />
+              </Card>
+            </Col>
+          </Row>
+        </div>
             </Card>
           </Col>
           <Col xs={24} sm={12} md={6}>
