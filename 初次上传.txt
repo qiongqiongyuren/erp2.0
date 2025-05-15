@@ -5,3 +5,15 @@ git branch -M main
 git remote add origin 地址
 git remote set-url origin 地址
 git push -u origin main
+# 查看当前状态（有没有改动）
+git status
+
+# 把所有更改添加到暂存区
+git add .
+
+# 提交更改（可改备注）
+git commit -m "更新了功能 xxx"
+
+# 推送到 GitHub
+git push
+ git push origin main
