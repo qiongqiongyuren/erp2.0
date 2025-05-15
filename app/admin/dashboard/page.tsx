@@ -1,9 +1,20 @@
 "use client";
 import { Card, Row, Col, Statistic } from "antd";
+"use client";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { AppstoreOutlined, TeamOutlined, ShoppingCartOutlined, InboxOutlined } from "@ant-design/icons";
-import { useEffect, useState } from "react";
 
 export default function AdminDashboard() {
+  const router = useRouter();
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const isAdmin = localStorage.getItem("erp_admin_login") === "1";
+      if (!isAdmin) {
+        router.replace("/admin/login");
+      }
+    }
+  }, [router]);
   const [stats, setStats] = useState({
     products: 0,
     customers: 0,
