@@ -15,12 +15,15 @@ export default function AdminLogin() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
-      if (res.ok) {
+      const data = await res.json();
+      if (data.success) {
         message.success("登录成功");
-        localStorage.setItem("erp_user", values.username);
-        router.push("/admin/dashboard");
+        if (typeof window !== "undefined") {
+          localStorage.setItem("erp_admin_login", "1");
+        }
+        router.replace("/admin/dashboard");
       } else {
-        message.error("用户名或密码错误");
+        message.error(data.message || "登录失败");
       }
     } finally {
       setLoading(false);
@@ -40,7 +43,20 @@ export default function AdminLogin() {
             </Button>
           </Form.Item>
         </Form>
-        <div style={{ color: '#888', fontSize: 13, textAlign: 'center' }}>默认管理员：admin / admin</div>
+        <div style={{ color: '#888', fontSize: 13, textAlign: 'center' }}>默认账号：admin / admin</div>
+        <div style={{ textAlign: 'center', marginTop: 12 }}>
+          <button
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                localStorage.removeItem("erp_admin_login");
+              }
+              router.replace("/admin/login");
+            }}
+            style={{ background: 'none', border: 'none', color: '#1677ff', cursor: 'pointer', fontSize: 13 }}
+          >
+            退出登录
+          </button>
+        </div>
       </Card>
     </div>
   );
