@@ -1,6 +1,5 @@
 "use client";
 import { Card, Row, Col, Statistic } from "antd";
-"use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AppstoreOutlined, TeamOutlined, ShoppingCartOutlined, InboxOutlined } from "@ant-design/icons";
