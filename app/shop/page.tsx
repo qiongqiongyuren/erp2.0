@@ -222,14 +222,3 @@ export default function ShopPage() {
     </div>
   );
 }
-        box-shadow: 0 8px 32px #00c6ff33, 0 2px 12px #7f5fff22 !important;
-        border-color: #7f5fff !important;
-        transform: translateY(-4px) scale(1.03);
-      }
-      .shop-img:hover {
-        transform: scale(1.04) rotate(-2deg);
-        filter: drop-shadow(0 4px 16px #7f5fff66);
-      }
-    `}</style>
-  </div>
-);
