@@ -66,7 +66,7 @@ export default function ShopPage() {
         </Link>
       </div>
       {/* 标题和商品 */}
-      <div style={{ padding: '96px 32px 32px 32px', maxWidth: 1300, margin: '0 auto' }}>
+      <div style={{ padding: '96px 32px 32px 32px', maxWidth: 1300, margin: '0 auto', background: '#fff', borderRadius: 20, boxShadow: '0 2px 24px #e0e7ff66' }}>
         <h2
           style={{
             color: 'transparent',
@@ -153,13 +153,64 @@ export default function ShopPage() {
                         boxShadow: '0 2px 12px #7f5fff33',
                         border: 'none',
                         height: 44,
-                        margin: '0 12px 12px 12px',
+                        margin: '0 12px 8px 12px',
                         transition: 'all .18s',
                       }}
                       className="buy-btn"
                     >
                       购买
                     </Button>,
+                    <Button
+                      type="default"
+                      key="add-cart"
+                      style={{
+                        fontWeight: 600,
+                        borderRadius: 10,
+                        fontSize: 16,
+                        border: '1.5px solid #7f5fff',
+                        color: '#7f5fff',
+                        margin: '0 12px 8px 12px',
+                        height: 40,
+                        background: '#fff',
+                        transition: 'all .18s',
+                      }}
+                      className="cart-btn"
+                    >
+                      加入购物车
+                    </Button>,
+                    <Button
+                      type="default"
+                      key="fav"
+                      style={{
+                        fontWeight: 600,
+                        borderRadius: 10,
+                        fontSize: 16,
+                        border: '1.5px solid #ffb300',
+                        color: '#ffb300',
+                        margin: '0 12px 8px 12px',
+                        height: 40,
+                        background: '#fffbe6',
+                        transition: 'all .18s',
+                      }}
+                      className="fav-btn"
+                    >
+                      收藏
+                    </Button>,
+                    <Button
+                      type="link"
+                      key="detail"
+                      style={{
+                        fontWeight: 500,
+                        fontSize: 15,
+                        color: '#1677ff',
+                        margin: '0 12px 12px 12px',
+                        height: 38,
+                        padding: 0,
+                      }}
+                      className="detail-btn"
+                    >
+                      查看详情
+                    </Button>
                   ]}
                 >
                   <Card.Meta
