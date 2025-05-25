@@ -49,9 +49,9 @@ export default function AdminLogin() {
           支持账号/密码：root/root123、admin/admin123、manager/manager123、user/user123
         </div>
         <div style={{ color: '#888', fontSize: 13, textAlign: 'center' }}>如需测试不同权限请切换账号</div>
-        <Form layout="vertical" onFinish={onFinish} autoComplete="off">
-          <Form.Item name="username" label="用户名" rules={[{ required: true, message: "请输入用户名" }]}> <Input size="large" style={{ borderRadius: 8, height: 40 }} /> </Form.Item>
-          <Form.Item name="password" label="密码" rules={[{ required: true, message: "请输入密码" }]}> <Input.Password size="large" style={{ borderRadius: 8, height: 40 }} /> </Form.Item>
+        <Form layout="vertical" onFinish={onFinish} autoComplete="off" initialValues={{}}>
+          <Form.Item name="username" label="用户名" rules={[{ required: true, message: "请输入用户名" }]}> <Input size="large" style={{ borderRadius: 8, height: 40 }} autoComplete="username" /> </Form.Item>
+          <Form.Item name="password" label="密码" rules={[{ required: true, message: "请输入密码" }]}> <Input.Password size="large" style={{ borderRadius: 8, height: 40 }} autoComplete="current-password" /> </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" block loading={loading} size="large" style={{ borderRadius: 8, height: 40, fontSize: 16 }}>
               登录
