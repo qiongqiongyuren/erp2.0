@@ -46,6 +46,10 @@ export default function AdminLogin() {
       </div>
       <Card style={{ width: 400, boxShadow: "0 2px 16px #a0aec033", borderRadius: 16, padding: 24 }}>
         <h2 style={{ textAlign: "center", color: "#1677ff", marginBottom: 24, fontSize: 20 }}>登录</h2>
+        <div style={{ color: '#1677ff', fontSize: 14, textAlign: 'center', marginBottom: 8 }}>
+          支持账号/密码：root/root123、admin/admin123、manager/manager123、user/user123
+        </div>
+        <div style={{ color: '#888', fontSize: 13, textAlign: 'center' }}>如需测试不同权限请切换账号</div>
         <Form layout="vertical" onFinish={onFinish} autoComplete="off">
           <Form.Item name="username" label="用户名" rules={[{ required: true, message: "请输入用户名" }]}> <Input size="large" style={{ borderRadius: 8, height: 40 }} /> </Form.Item>
           <Form.Item name="password" label="密码" rules={[{ required: true, message: "请输入密码" }]}> <Input.Password size="large" style={{ borderRadius: 8, height: 40 }} /> </Form.Item>
@@ -55,7 +59,6 @@ export default function AdminLogin() {
             </Button>
           </Form.Item>
         </Form>
-        <div style={{ color: '#888', fontSize: 13, textAlign: 'center' }}>默认账号：admin / admin</div>
         <div style={{ textAlign: 'center', marginTop: 12 }}>
           <button
             onClick={() => {
