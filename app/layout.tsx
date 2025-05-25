@@ -14,6 +14,11 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body>
+        <div style={{ position: 'fixed', top: 24, right: 32, zIndex: 200 }}>
+          <a href="/login" style={{ textDecoration: 'none' }}>
+            <button className="login-btn-front">注册/登录</button>
+          </a>
+        </div>
         {children}
       </body>
     </html>

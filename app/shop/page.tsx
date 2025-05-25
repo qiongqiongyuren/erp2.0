@@ -66,22 +66,27 @@ export default function ShopPage() {
         </Link>
       </div>
       {/* 标题和商品 */}
-      <div style={{ padding: '96px 32px 32px 32px', maxWidth: 1300, margin: '0 auto', background: '#fff', borderRadius: 20, boxShadow: '0 2px 24px #e0e7ff66' }}>
-        <h2
-          style={{
-            color: 'transparent',
-            background: 'linear-gradient(90deg,#7f5fff,#00c6ff,#ffb300 80%)',
-            WebkitBackgroundClip: 'text',
-            backgroundClip: 'text',
-            fontSize: 38,
-            fontWeight: 900,
-            letterSpacing: 2,
-            marginBottom: 32,
-            textShadow: '0 2px 8px #a0aec0cc',
-          }}
-        >
-          <span style={{ filter: 'drop-shadow(0 0 12px #ffe066)' }}>商城商品</span>
-        </h2>
+      <div style={{ padding: '48px 24px 24px 24px', maxWidth: 1300, margin: '0 auto', background: '#fff', borderRadius: 20, boxShadow: '0 2px 24px #e0e7ff66' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+          <h2
+            style={{
+              color: '#333',
+              fontSize: 38,
+              fontWeight: 900,
+              letterSpacing: 2,
+              marginBottom: 0,
+            }}
+          >
+            <span style={{}}>商城商品</span>
+          </h2>
+          <div style={{ display: 'flex', gap: 12 }}>
+            <Button type="default" style={{ fontWeight: 600, borderRadius: 8, border: '1.5px solid #7f5fff', color: '#7f5fff', background:'#fff' }}>全部商品</Button>
+            <Button type="default" style={{ fontWeight: 600, borderRadius: 8, border: '1.5px solid #ffb300', color: '#ffb300', background:'#fffbe6' }}>热销推荐</Button>
+            <Button type="default" style={{ fontWeight: 600, borderRadius: 8, border: '1.5px solid #00c6ff', color: '#00c6ff', background:'#e0f7ff' }}>筛选</Button>
+            <Button type="default" style={{ fontWeight: 600, borderRadius: 8, border: '1.5px solid #bbb', color: '#888', background:'#f5f5f5' }}>联系客服</Button>
+            <Button type="primary" style={{ fontWeight: 700, borderRadius: 8, background:'linear-gradient(90deg,#7f5fff 60%,#00c6ff 100%)', border:'none' }}>我的订单</Button>
+          </div>
+        </div>
         {loading ? (
           <div style={{ textAlign: 'center', margin: 60 }}><Spin size="large" /></div>
         ) : products.length === 0 ? (
@@ -94,12 +99,10 @@ export default function ShopPage() {
                   hoverable
                   style={{
                     borderRadius: 20,
-                    boxShadow:
-                      '0 6px 32px 0 #a0e7ff33, 0 2px 12px #7f5fff22',
+                    boxShadow: '0 6px 32px 0 #a0e7ff33, 0 2px 12px #7f5fff22',
                     border: '3px solid',
                     borderImage: 'linear-gradient(120deg,#7f5fff,#00c6ff,#ffe066,#ffb300) 1',
-                    background:
-                      'linear-gradient(120deg,rgba(255,255,255,0.98) 90%,#e0e7ff 100%)',
+                    background: '#fff',
                     transition: 'box-shadow .3s,transform .15s',
                   }}
                   bodyStyle={{ padding: 18, minHeight: 160 }}
