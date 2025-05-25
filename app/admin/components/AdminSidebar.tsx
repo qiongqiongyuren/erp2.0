@@ -44,7 +44,7 @@ export default function AdminSidebar() {
     },
     {
       key: '/admin/raw-materials',
-      icon: <AccountBookOutlined />,
+      icon: <DollarCircleOutlined />,
       label: '原材料管理',
     },
     {
