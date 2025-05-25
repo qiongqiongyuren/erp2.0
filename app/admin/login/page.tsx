@@ -17,15 +17,17 @@ export default function AdminLogin() {
       });
       const data = await res.json();
       if (data.success) {
+        // 兼容 role 字段在 data.role 或 data.user.role
+        const role = data.role || (data.user && data.user.role) || "manager";
         message.success("登录成功");
         if (typeof window !== "undefined") {
           localStorage.setItem("erp_admin_login", "1");
-          localStorage.setItem("erp_admin_role", data.role || "manager");
+          localStorage.setItem("erp_admin_role", role);
         }
         // 动态跳转首页，超级管理员跳转 /admin/dashboard，admin跳转 /admin/products，manager跳转 /admin/orders
-        if (data.role === 'root') {
+        if (role === 'root') {
           router.replace("/admin/dashboard");
-        } else if (data.role === 'admin') {
+        } else if (role === 'admin') {
           router.replace("/admin/products");
         } else {
           router.replace("/admin/orders");
@@ -40,10 +42,7 @@ export default function AdminLogin() {
 
   return (
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(135deg,#e0e7ff 0%,#f0fdfa 100%)" }}>
-      <div style={{ display: "flex", justifyContent: "center", marginBottom: 24 }}>
-        <img src="logo.png" alt="logo" style={{ width: 40, height: 40, marginRight: 12 }} />
-        <h1 style={{ color: "#1677ff", fontSize: 24, fontWeight: 600 }}>后台管理系统</h1>
-      </div>
+
       <Card style={{ width: 400, boxShadow: "0 2px 16px #a0aec033", borderRadius: 16, padding: 24 }}>
         <h2 style={{ textAlign: "center", color: "#1677ff", marginBottom: 24, fontSize: 20 }}>登录</h2>
         <div style={{ color: '#1677ff', fontSize: 14, textAlign: 'center', marginBottom: 8 }}>
