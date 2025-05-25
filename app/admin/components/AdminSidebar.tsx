@@ -8,7 +8,7 @@ import {
   TeamOutlined,
   InboxOutlined,
   LogoutOutlined,
-  AccountBookOutlined,
+  DollarCircleOutlined,
 } from '@ant-design/icons';
 import { useRouter, usePathname } from 'next/navigation';
 
@@ -48,8 +48,8 @@ export default function AdminSidebar() {
       label: '原材料管理',
     },
     {
-      key: '/admin/accounting',
-      icon: <AccountBookOutlined />,
+      key: '/admin/ledger',
+      icon: <DollarCircleOutlined />,
       label: '账本管理',
     },
     {

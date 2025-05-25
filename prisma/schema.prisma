@@ -46,3 +46,11 @@ model RawMaterial {
   unit        String
   description String?
 }
+
+model LedgerEntry {
+  id          String   @id @default(cuid())
+  date        DateTime
+  type        String   // 收入/支出
+  description String
+  amount      Float
+}
