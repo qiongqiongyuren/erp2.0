@@ -13,6 +13,44 @@ interface RawMaterial {
 }
 
 export default function RawMaterialsPage() {
+  // ...原有state
+  const [importing, setImporting] = useState(false);
+
+  // Excel导入逻辑
+  const handleImportExcel = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImporting(true);
+    const formData = new FormData();
+    formData.append('file', file);
+    try {
+      const res = await fetch('/api/raw-materials/import', {
+        method: 'POST',
+        body: formData,
+      });
+      const result = await res.json();
+      if (result.success) {
+        message.success(`成功导入 ${result.count} 条原材料数据`);
+        // 重新加载表格
+        fetch("/api/raw-materials")
+          .then(async (res) => {
+            try {
+              const data = await res.json();
+              setMaterials(data);
+            } catch {
+              setMaterials([]);
+            }
+          });
+      } else {
+        message.error(result.message || '导入失败');
+      }
+    } catch (e) {
+      message.error('导入失败');
+    }
+    setImporting(false);
+    e.target.value = '';
+  };
+
   const [materials, setMaterials] = useState<RawMaterial[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
@@ -88,9 +126,21 @@ export default function RawMaterialsPage() {
   return (
     <div className="p-6">
       <div className="flex justify-between mb-4">
-        <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
-          新增原材料
-        </Button>
+        <div>
+          <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
+            新增原材料
+          </Button>
+          <input
+            type="file"
+            accept=".xlsx"
+            style={{ display: 'none' }}
+            id="excel-upload"
+            onChange={handleImportExcel}
+          />
+          <Button style={{ marginLeft: 12 }} onClick={() => document.getElementById('excel-upload')?.click()}>
+            导入 Excel
+          </Button>
+        </div>
       </div>
       <Table columns={columns} dataSource={materials} rowKey="id" />
       <Modal
