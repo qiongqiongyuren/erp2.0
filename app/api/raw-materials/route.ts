@@ -21,14 +21,18 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     console.log('收到的原材料数据:', body);
     
-    // 检查数据类型
+    // 检查数据类型并确保字符串正确编码
     const data = {
-      name: body.name?.toString() || '',
+      name: body.name ? encodeURIComponent(body.name.toString()) : '',
       price: typeof body.price === 'number' ? body.price : parseFloat(body.price?.toString() || '0'),
       stock: typeof body.stock === 'number' ? body.stock : parseInt(body.stock?.toString() || '0'),
-      unit: body.unit?.toString() || '',
-      description: body.description?.toString() || ''
+      unit: body.unit ? encodeURIComponent(body.unit.toString()) : '',
+      description: body.description ? encodeURIComponent(body.description.toString()) : ''
     };
+    
+    // 确保数字字段是有效的数字
+    if (isNaN(data.price)) data.price = 0;
+    if (isNaN(data.stock)) data.stock = 0;
     
     console.log('处理后的数据:', data);
     
