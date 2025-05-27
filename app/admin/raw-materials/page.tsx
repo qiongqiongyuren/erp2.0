@@ -153,10 +153,12 @@ export default function RawMaterialsPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
         });
+        const result = await res.json();
         if (res.ok) {
           message.success('新增成功');
         } else {
-          message.error('新增失败');
+          message.error(result.error || '新增失败');
+          console.error('新增失败详情:', result);
           return;
         }
       }

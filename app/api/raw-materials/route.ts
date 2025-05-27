@@ -19,12 +19,32 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const material = await prisma.rawMaterial.create({ data: body });
+    console.log('收到的原材料数据:', body);
+    
+    // 检查数据类型
+    const data = {
+      name: body.name?.toString() || '',
+      price: typeof body.price === 'number' ? body.price : parseFloat(body.price?.toString() || '0'),
+      stock: typeof body.stock === 'number' ? body.stock : parseInt(body.stock?.toString() || '0'),
+      unit: body.unit?.toString() || '',
+      description: body.description?.toString() || ''
+    };
+    
+    console.log('处理后的数据:', data);
+    
+    const material = await prisma.rawMaterial.create({ data });
+    console.log('成功创建的原材料:', material);
     return NextResponse.json(material);
-  } catch (error) {
-    console.error('Error creating material:', error);
+  } catch (error: any) {
+    console.error('新增原材料失败:', error);
+    let errorMessage = '新增失败';
+    if (error.code) {
+      errorMessage = `数据库错误: ${error.message}`;
+    } else if (error.name === 'ValidationError') {
+      errorMessage = `数据验证失败: ${error.message}`;
+    }
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
