@@ -104,6 +104,8 @@ export default function RawMaterialsPage() {
   };
 
   const handleDelete = async (id: string) => {
+    if (!window.confirm('确定要删除这条原材料吗？')) return;
+    
     try {
       const res = await fetch(`/api/raw-materials/${id}`, { method: 'DELETE' });
       if (res.ok) {
@@ -119,9 +121,10 @@ export default function RawMaterialsPage() {
             }
           });
       } else {
-        message.error('删除失败');
+        const result = await res.json();
+        message.error(result.error || '删除失败');
       }
-    } catch {
+    } catch (error) {
       message.error('删除失败');
     }
   };
@@ -133,6 +136,7 @@ export default function RawMaterialsPage() {
       // 只提交必要字段
       const { name, price, stock, unit, description } = values;
       const data = { name, price, stock, unit, description };
+      
       if (editingId) {
         // 编辑原材料
         const res = await fetch(`/api/raw-materials/${editingId}`, {
@@ -140,10 +144,11 @@ export default function RawMaterialsPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data),
         });
+        const result = await res.json();
         if (res.ok) {
           message.success('编辑成功');
         } else {
-          message.error('编辑失败');
+          message.error(result.error || '编辑失败');
           return;
         }
       } else {
@@ -158,7 +163,6 @@ export default function RawMaterialsPage() {
           message.success('新增成功');
         } else {
           message.error(result.error || '新增失败');
-          console.error('新增失败详情:', result);
           return;
         }
       }
@@ -174,7 +178,10 @@ export default function RawMaterialsPage() {
         });
       setIsModalOpen(false);
       form.resetFields();
-    } catch {}
+    } catch (error) {
+      console.error('操作失败:', error);
+      message.error('操作失败');
+    }
   };
 
 
