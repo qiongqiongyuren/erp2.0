@@ -21,18 +21,43 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     console.log('收到的原材料数据:', body);
     
-    // 确保数据正确处理
+    // 严格验证数据
+    const errors: string[] = [];
+    
+    // 验证必填字段
+    if (!body.name || typeof body.name !== 'string') {
+      errors.push('名称必须是字符串');
+    }
+    if (body.price === undefined || isNaN(parseFloat(body.price?.toString() || '0'))) {
+      errors.push('单价必须是数字');
+    }
+    if (body.stock === undefined || isNaN(parseInt(body.stock?.toString() || '0'))) {
+      errors.push('库存必须是数字');
+    }
+    if (!body.unit || typeof body.unit !== 'string') {
+      errors.push('单位必须是字符串');
+    }
+    
+    if (errors.length > 0) {
+      return NextResponse.json({ error: errors.join(', ') }, { status: 400 });
+    }
+    
+    // 处理数据
     const data = {
-      name: body.name ? body.name.toString() : '',
-      price: typeof body.price === 'number' ? body.price : parseFloat(body.price?.toString() || '0'),
-      stock: typeof body.stock === 'number' ? body.stock : parseInt(body.stock?.toString() || '0'),
-      unit: body.unit ? body.unit.toString() : '',
-      description: body.description ? body.description.toString() : ''
+      name: body.name.toString().trim(),
+      price: parseFloat(body.price?.toString() || '0'),
+      stock: parseInt(body.stock?.toString() || '0'),
+      unit: body.unit.toString().trim(),
+      description: body.description ? body.description.toString().trim() : ''
     };
     
-    // 确保数字字段是有效的数字
-    if (isNaN(data.price)) data.price = 0;
-    if (isNaN(data.stock)) data.stock = 0;
+    // 验证数字是否有效
+    if (isNaN(data.price) || data.price < 0) {
+      return NextResponse.json({ error: '单价必须是有效的数字' }, { status: 400 });
+    }
+    if (isNaN(data.stock) || data.stock < 0) {
+      return NextResponse.json({ error: '库存必须是有效的数字' }, { status: 400 });
+    }
     
     console.log('处理后的数据:', data);
     

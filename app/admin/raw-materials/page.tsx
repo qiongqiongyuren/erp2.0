@@ -132,10 +132,33 @@ export default function RawMaterialsPage() {
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
-      console.log('原材料表单提交内容:', values);
-      // 只提交必要字段
+      
+      // 验证数据
       const { name, price, stock, unit, description } = values;
-      const data = { name, price, stock, unit, description };
+      
+      if (!name || !unit) {
+        message.error('名称和单位是必填项');
+        return;
+      }
+      
+      if (isNaN(price) || price < 0) {
+        message.error('单价必须是有效的数字');
+        return;
+      }
+      
+      if (isNaN(stock) || stock < 0) {
+        message.error('库存必须是有效的数字');
+        return;
+      }
+      
+      // 处理数据
+      const data = {
+        name: name.trim(),
+        price: parseFloat(price),
+        stock: parseInt(stock),
+        unit: unit.trim(),
+        description: description ? description.trim() : ''
+      };
       
       if (editingId) {
         // 编辑原材料
@@ -145,11 +168,23 @@ export default function RawMaterialsPage() {
           body: JSON.stringify(data),
         });
         const result = await res.json();
+        
         if (res.ok) {
           message.success('编辑成功');
+          // 刷新表格
+          fetch("/api/raw-materials")
+            .then(async (res) => {
+              try {
+                const data = await res.json();
+                setMaterials(data);
+              } catch {
+                setMaterials([]);
+              }
+            });
+          setIsModalOpen(false);
+          form.resetFields();
         } else {
           message.error(result.error || '编辑失败');
-          return;
         }
       } else {
         // 新增原材料
@@ -159,25 +194,25 @@ export default function RawMaterialsPage() {
           body: JSON.stringify(data),
         });
         const result = await res.json();
+        
         if (res.ok) {
           message.success('新增成功');
+          // 刷新表格
+          fetch("/api/raw-materials")
+            .then(async (res) => {
+              try {
+                const data = await res.json();
+                setMaterials(data);
+              } catch {
+                setMaterials([]);
+              }
+            });
+          setIsModalOpen(false);
+          form.resetFields();
         } else {
           message.error(result.error || '新增失败');
-          return;
         }
       }
-      // 刷新表格
-      fetch("/api/raw-materials")
-        .then(async (res) => {
-          try {
-            const data = await res.json();
-            setMaterials(data);
-          } catch {
-            setMaterials([]);
-          }
-        });
-      setIsModalOpen(false);
-      form.resetFields();
     } catch (error) {
       console.error('操作失败:', error);
       message.error('操作失败');
