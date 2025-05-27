@@ -129,6 +129,7 @@ export default function RawMaterialsPage() {
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
+      console.log('原材料表单提交内容:', values);
       // 只提交必要字段
       const { name, price, stock, unit, description } = values;
       const data = { name, price, stock, unit, description };
@@ -203,10 +204,10 @@ export default function RawMaterialsPage() {
         destroyOnClose
       >
         <Form form={form} layout="vertical">
-          <Form.Item name="name" label="名称" rules={[{ required: true, message: '请输入名称' }]}> <Input /> </Form.Item>
-          <Form.Item name="price" label="单价" rules={[{ required: true, message: '请输入单价' }]}> <InputNumber min={0} style={{ width: '100%' }} /> </Form.Item>
-          <Form.Item name="stock" label="库存" rules={[{ required: true, message: '请输入库存' }]}> <InputNumber min={0} style={{ width: '100%' }} /> </Form.Item>
-          <Form.Item name="unit" label="单位" rules={[{ required: true, message: '请输入单位' }]}> <Input /> </Form.Item>
+          <Form.Item name="name" label="名称"> <Input /> </Form.Item>
+          <Form.Item name="price" label="单价"> <InputNumber min={0} style={{ width: '100%' }} /> </Form.Item>
+          <Form.Item name="stock" label="库存"> <InputNumber min={0} style={{ width: '100%' }} /> </Form.Item>
+          <Form.Item name="unit" label="单位"> <Input /> </Form.Item>
           <Form.Item name="description" label="描述"> <Input.TextArea rows={2} /> </Form.Item>
         </Form>
       </Modal>
