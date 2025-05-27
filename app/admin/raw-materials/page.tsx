@@ -104,24 +104,73 @@ export default function RawMaterialsPage() {
   };
 
   const handleDelete = async (id: string) => {
-    // TODO: 调用删除API
-    message.success('删除成功（示例，无实际删除）');
+    try {
+      const res = await fetch(`/api/raw-materials/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        message.success('删除成功');
+        // 刷新表格
+        fetch("/api/raw-materials")
+          .then(async (res) => {
+            try {
+              const data = await res.json();
+              setMaterials(data);
+            } catch {
+              setMaterials([]);
+            }
+          });
+      } else {
+        message.error('删除失败');
+      }
+    } catch {
+      message.error('删除失败');
+    }
   };
 
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
       if (editingId) {
-        // TODO: 调用编辑API
-        message.success('编辑成功（示例，无实际保存）');
+        // 编辑原材料
+        const res = await fetch(`/api/raw-materials/${editingId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(values),
+        });
+        if (res.ok) {
+          message.success('编辑成功');
+        } else {
+          message.error('编辑失败');
+          return;
+        }
       } else {
-        // TODO: 调用新增API
-        message.success('新增成功（示例，无实际保存）');
+        // 新增原材料
+        const res = await fetch('/api/raw-materials', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(values),
+        });
+        if (res.ok) {
+          message.success('新增成功');
+        } else {
+          message.error('新增失败');
+          return;
+        }
       }
+      // 刷新表格
+      fetch("/api/raw-materials")
+        .then(async (res) => {
+          try {
+            const data = await res.json();
+            setMaterials(data);
+          } catch {
+            setMaterials([]);
+          }
+        });
       setIsModalOpen(false);
       form.resetFields();
     } catch {}
   };
+
 
   return (
     <div className="p-6">
