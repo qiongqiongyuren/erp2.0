@@ -129,12 +129,15 @@ export default function RawMaterialsPage() {
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
+      // 只提交必要字段
+      const { name, price, stock, unit, description } = values;
+      const data = { name, price, stock, unit, description };
       if (editingId) {
         // 编辑原材料
         const res = await fetch(`/api/raw-materials/${editingId}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(values),
+          body: JSON.stringify(data),
         });
         if (res.ok) {
           message.success('编辑成功');
@@ -147,7 +150,7 @@ export default function RawMaterialsPage() {
         const res = await fetch('/api/raw-materials', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(values),
+          body: JSON.stringify(data),
         });
         if (res.ok) {
           message.success('新增成功');
